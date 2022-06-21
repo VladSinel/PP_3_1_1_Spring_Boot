@@ -3,37 +3,39 @@ package preproject.spring_boot.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import preproject.spring_boot.dao.UserDAO;
 import preproject.spring_boot.model.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-public class UserServiceImp {
-    private final UserService userService;
+public class UserServiceImp implements UserService {
+
+    private final UserDAO userDAO;
 
     @Autowired
-    public UserServiceImp(UserService userService) {
-        this.userService = userService;
+    public UserServiceImp(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Transactional
     public void addUser(User user) {
-        userService.save(user);
+        userDAO.save(user);
     }
 
     @Transactional
     public void deleteUser(Long id) {
-        userService.deleteById(id);
+        userDAO.deleteById(id);
     }
 
     @Transactional
     public List<User> allUsers() {
-        return userService.findAll();
+        return userDAO.findAll();
     }
 
     @Transactional
     public User getUser(Long id) {
-        return userService.getReferenceById(id);
+        return userDAO.getReferenceById(id);
     }
 }
